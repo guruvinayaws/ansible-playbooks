@@ -1,0 +1,10 @@
+---
+- name: Implementing play scopr variables
+  hosts: Supergroup
+  tasks:
+    - name: Installing firewall
+      apt:
+        name: "{{a}}"
+        state: "{{b}}"
+        update_cache: "{{c}}"
+...
