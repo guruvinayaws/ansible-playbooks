@@ -1,0 +1,39 @@
+---
+- name: cofigure tomcat
+  hosts: all
+  tasks:
+    - name: install tomcat10
+      apt:
+        name: tomcat10
+        state: present
+        update_cache: yes
+    - name: install tomcat10-admin
+      apt:
+        name: tomcat10-admin
+        state: present
+        update_cache: yes
+    - name: copy customised tomcat xml file
+      copy:
+        src: tomcat-users.xml
+        dest: /etc/tomcat10
+    - name: change of port
+      replace:
+        regexp: 8080
+        replace: 9090
+        path: /etc/tomcat10/server.xml
+    - name: Restarting tomcat
+      service:
+        name: tomcat10
+        state: restarted
+    - name: Pause for 20 secs
+      pause:
+        seconds: 20
+    - name: check tomcat on Server one
+      uri:
+        url: http://172.31.1.21
+        status_code: 200
+    - name: check tomcat on Server two
+      uri:
+        url: http://172.31.3.178
+        status_code: 200
+...
