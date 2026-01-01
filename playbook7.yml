@@ -10,17 +10,17 @@
     - name: edit html file
       copy:
         content: "IntelliqIT"
-        dest: /vars/www/html/index.html
+        dest: /var/www/html/index.html
     - name: Restart apache2
       service:
          name: apache2
          state: restarted
     - name: check the status in S1
       uri:
-        url: http://172.31.1.21
+        url: http://3.237.94.206
         status_code: 200
     - name: check the status in S2
       uri:
-        url: http://172.31.3.178
+        url: http://3.219.216.94
         status_code: 200
 ...
