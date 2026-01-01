@@ -1,0 +1,17 @@
+---
+- name: Install loops
+  hosts: all
+  tasks: 
+    - name: INS/UNIS/UPGRA SOFTWARE APPS
+      apt:
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: no
+      with_items:
+        - {a: tree,b: present,c: no}
+        - {a: git, b: absent,c: no}
+        - {a: maven, b: latest, c: yes}
+         
+
+       
+...
