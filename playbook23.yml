@@ -1,0 +1,13 @@
+---
+- name: Implementing when conditons
+  hosts: all
+  vars:
+    a: 20
+  tasks:
+    - name: Install maven
+      apt:
+        name: maven
+        state: present
+        update_cache: yes
+      when: a==10
+...

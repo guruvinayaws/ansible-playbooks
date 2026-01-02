@@ -1,0 +1,39 @@
+---
+- name: insatll apache2 on 2 Ubuntu servers
+  hosts: all
+  tasks:
+   - block:
+      - name: install apache using ubuntu servers
+        apt:
+          name: apache2
+          state: present
+          update_cache: yes
+     rescue:
+       - name: install apache using redhat servers
+         yum:
+           name: httpd
+           state: present
+           update_cache: yes
+   - name: edit index.html file
+     copy:
+       content: Welcome to intelliq
+       dest: /var/www/html/index.html
+   - block:
+      - name: restart apache on ubuntu
+        service:
+           name: apache2
+           state: restarted
+     rescue:
+      - name: restart apache on redhat
+        service:
+          name: httpd
+          state: restarted
+   - name: check uri resplonce
+     uri:
+       url: "{{item}}"
+       status_code: 200
+     with_items:
+      - http://3.237.94.206
+      - http://3.219.216.94
+      - http://3.228.217.84
+
