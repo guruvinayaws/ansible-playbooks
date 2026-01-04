@@ -1,0 +1,13 @@
+---
+- name: copy customized users.xml file
+  copy:
+    src: "{{file1}}"
+    dest: "{{dest1}}"
+- name: change port 
+  replace:
+    regexp: "{{port1}}"
+    replace: "{{port2}}"
+    path: "{{path1}}"
+  notify: check url response    
+...      
+

@@ -1,0 +1,6 @@
+---
+- name: Copy Customized index.html apache2
+  copy:
+    src: index.html
+    dest: /var/www/html/
+  notify: restart apache2    
