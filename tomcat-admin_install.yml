@@ -1,0 +1,8 @@
+---
+- name: Install tomcat
+  apt:
+    name: tomcat10-admin
+    state: present
+    update_cache: yes
+...
+

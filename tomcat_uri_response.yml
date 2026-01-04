@@ -1,0 +1,11 @@
+---
+- name: Check tomcat response on all servers
+  uri:
+    url: "{{item}}"
+    status_code: 200
+  with_items:
+      - http://172.31.2.138
+      - http://172.31.14.50
+      - http://172.31.7.129
+      - http://172.31.1.21
+      - http://172.31.3.178

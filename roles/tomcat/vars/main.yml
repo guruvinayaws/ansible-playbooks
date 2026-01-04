@@ -5,7 +5,6 @@
 pkg1: tomcat10
 pkg2: tomcat10-admin
 state1: present
-state2: present
 cache1: yes
 cache2: no
 file1: tomcat-users.xml
@@ -15,5 +14,8 @@ port2: 9090
 path1: /etc/tomcat10/server.xml
 state2: restarted
 min: 1
+server1: "http://172.31.1.21:9090"
+server2: "http://172.31.3.178:9090"
+status1: 200
 
 

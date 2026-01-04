@@ -1,0 +1,6 @@
+---
+- name: call child plabook
+  hosts: all
+  tasks:
+    - name: run child plabooks
+      include_tasks: playbook34.yml

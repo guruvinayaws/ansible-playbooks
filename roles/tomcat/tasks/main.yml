@@ -1,6 +1,6 @@
 ---
 - name: call child playbooks to config tomcat10
-- include_tasks: "{{item}}"
+  include_tasks: "{{item}}"
   with_items:
     - install.yml
     - configure.yml

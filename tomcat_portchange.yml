@@ -1,0 +1,7 @@
+---
+- name: Change of port in tomcat
+  replace:
+    regexp: 8080
+    replace: 9090
+    path: /etc/tomcat10/server.xml
+...      

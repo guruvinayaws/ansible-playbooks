@@ -6,5 +6,5 @@
     update_cache: "{{item.c}}"
   with_items:
    - {a: "{{pkg1}}",b: "{{state1}}" , c: "{{cache1}}" }
-   - {a: "{{pkg2}}",b: "{{state2}}", c: "{{cache2}}"}
+   - {a: "{{pkg2}}",b: "{{state1}}", c: "{{cache2}}"}
 
