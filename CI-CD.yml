@@ -1,0 +1,71 @@
+---
+- name: Install req s/w on devserver
+  hosts: devserver
+  tasks:
+    - name: Install s/w
+      apt: 
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items:
+       - {a: openjdk-17-jdk,b: present,c: yes}
+       - {a: git,b: present,c: no}
+       - {a: maven,b: present,c: no} 
+- name: Install re s/w on QAserver
+  hosts: QAserver
+  tasks:
+    - name: Install s/w
+      apt:
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items:
+       - {a: openjdk-17-jdk,b: present,c: yes}
+       - {a: git,b: present,c: no}
+       - {a: tomcat10,b: present,c: no}
+       - {a: tomcat10-admin,b: present,c: no}
+- name: Install re s/w on prodserver
+  hosts: Prodserver
+  tasks:
+    - name: Install s/w
+      apt:
+        name: "{{item.a}}"
+        state: "{{item.b}}"
+        update_cache: "{{item.c}}"
+      with_items:
+       - {a: tomcat10,b: present,c: no}
+       - {a: tomcat10-admin,b: present,c: no}
+- name: Coutinous Download & Cont Build
+  hosts: devserver
+  tasks:
+    - name: download the code from git hub
+      git:
+        repo: https://github.com/IntelliqDevops/maven.git
+        dest: dev-git
+    - name: Build an artifact from code
+      shell: cd dev-git;mvn package
+    - name: fetch artifact from dev to controller
+      fetch: 
+        src: dev-git/webapp/target/webapp.war
+        dest: /tmp    
+- name: Cont Deply & Cont Testing
+  hosts: QAserver
+  tasks:
+    - name: Deploy artifact to tomcat on QAserver
+      copy:
+        src: /tmp/172.31.21.178/dev-git/webapp/target/webapp.war
+        dest: /var/lib/tomcat10/webapps/qaapp.war
+    - name: Download the selenium scripts
+      git:
+        repo: https://github.com/IntelliqDevops/FunctionalTesting.git
+        dest: test-git
+    - name: Execute selenium steps
+      shell: java -jar test-git/testing.jar
+- name: Cont Delivery
+  hosts: Prodserver
+  tasks: 
+    - name: Deploy artifact to tomcat on Prodserver
+      copy:
+        src: /tmp/172.31.21.178/dev-git/webapp/target/webapp.war
+        dest: /var/lib/tomcat10/webapps/prodapp.war  
+
